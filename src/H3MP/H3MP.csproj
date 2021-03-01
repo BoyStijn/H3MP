@@ -34,20 +34,20 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="BepInEx.Core" Version="5.4.0" />
+    <PackageReference Include="BepInEx.Core" Version="5.4.4" />
     <PackageReference Include="Deli">
       <Version>0.2.4</Version>
     </PackageReference>
     <PackageReference Include="Deli.Runtime">
       <Version>0.2.4</Version>
     </PackageReference>
+    <PackageReference Include="LiteNetLib">
+      <Version>0.9.4</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\game\h3vr_Data\Managed\Assembly-CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="LiteNetLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\LiteNetLib.0.9.3.2\lib\net35\LiteNetLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -69,6 +69,9 @@
     <Compile Include="Configs\HostPermissionConfig.cs" />
     <Compile Include="Configs\HostPublicBindingConfig.cs" />
     <Compile Include="Configs\RootConfig.cs" />
+    <Compile Include="Messages\ItemSpawnMessage.cs" />
+    <Compile Include="Messages\ItemTransformMessage.cs" />
+    <Compile Include="Peers\Item.cs" />
     <Compile Include="Utils\PrivacyManager.cs" />
     <Compile Include="Enums\JoinError.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />

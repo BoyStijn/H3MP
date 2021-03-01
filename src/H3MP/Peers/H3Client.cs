@@ -33,6 +33,7 @@ namespace H3MP.Peers
 
 		private bool _disposed;
 		private readonly Dictionary<byte, Puppet> _players;
+		private readonly Dictionary<byte, Item> _items;
 		private ServerTime _time;
 		private HealthInfo _health;
 
@@ -50,6 +51,7 @@ namespace H3MP.Peers
 			_tickTimer = new LoopTimer(tickDeltaTime);
 
 			_players = new Dictionary<byte, Puppet>();
+			_items = new Dictionary<byte, Item>();
 			_health = new HealthInfo(HEALTH_INTERVAL, (int) (HEALTH_INTERVAL / PING_INTERVAL));
 		}
 
@@ -123,6 +125,14 @@ namespace H3MP.Peers
 			puppet.ProcessTransforms(message.Transforms);
 
 			_players.Add(message.ID, puppet);
+		}
+
+		private void AddItem(ItemSpawnMessage message)
+		{
+			var item = new Item();
+			item.ProcessTransforms(message.Transforms);
+
+			_players.Add(message.ID, item);
 		}
 
 		private void LoadLevel(string name)
@@ -271,6 +281,27 @@ namespace H3MP.Peers
 				}
 			}
 		}
+
+		//item events
+
+		internal static void OnItemSpawn(H3Client self, Peer peer, ItemSpawnMessage message)
+		{
+			self.AddItem(message);
+		}
+
+		internal static void OnItemDespawn(H3Client self, Peer peer, ItemDespawnMessage message)
+		{
+			var id = message.ID;
+			if (!self._items.TryGetValue(id, out var item))
+			{
+				return;
+			}
+
+			item.Dispose();
+			self._items.Remove(id);
+
+		}
+
 
 		internal class Events : IClientEvents<H3Client>
 		{
